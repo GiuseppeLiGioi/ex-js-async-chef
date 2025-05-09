@@ -23,3 +23,49 @@ getChefBirthday(1)
   .then(birthday => console.log("Data di nascita dello chef:", birthday))
   .catch(error => console.error("Errore:", error.message));
 */
+
+const getChefBirthday = async (id) => {
+
+    let objRicetta, userId;
+
+    try{
+        //recuper l'intera ricetta
+        const responseRicetta = await fetch(`https://dummyjson.com/recipes/${id}`) 
+         objRicetta = await responseRicetta.json();
+         console.log(objRicetta)
+         //recuper l'userID.
+         userId = objRicetta.userId;
+         
+         
+
+    }catch(error){
+
+       throw new Error ("Non reisco a recuperare la ricetta con id" + id);
+      //il finally in questo caso è superficiale in quanto nella funzione non è presente nessun return.
+    }finally{
+        console.log("operazione completata")
+    }
+
+
+    let infoChef;
+    let dateOfBirth = new Date();
+
+    try{
+        const responseChef = await fetch(`https://dummyjson.com/users/${userId}`)
+        infoChef = await responseChef.json();
+        //console.log(infoChef)
+        dateOfBirth = infoChef.birthDate; 
+        return dateOfBirth;
+    }catch(error){
+        throw new Error ("Non riesco a recuperare le info dello chef con userId" + id)
+        //il finally in questo caso è necessario in quanto nella funzione  è presente un return.
+    }finally{
+        console.log("Operazione completata")
+    }
+
+}
+
+getChefBirthday(3)
+  .then(dateOfBirth => console.log(dateOfBirth))
+  .catch(error => console.error("Errore:", error.message));
+ 
