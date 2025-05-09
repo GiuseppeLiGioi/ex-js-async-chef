@@ -24,6 +24,12 @@ getChefBirthday(1)
   .catch(error => console.error("Errore:", error.message));
 */
 
+/*🎯 Bonus 1
+Attualmente, se la prima richiesta non trova una ricetta, la seconda richiesta potrebbe comunque essere eseguita causando errori a cascata.
+
+Modifica getChefBirthday(id) per intercettare eventuali errori prima di fare la seconda richiesta.
+ */
+
 const getChefBirthday = async (id) => {
 
     let objRicetta, userId;
@@ -31,13 +37,16 @@ const getChefBirthday = async (id) => {
     try{
         //recuper l'intera ricetta
         const responseRicetta = await fetch(`https://dummyjson.com/recipes/${id}`) 
+        //parte Bonus 1, ho aggiunto un if per verificare che la response fossen corretta, in caso contrario stampo un errore.
+        //L'errore generato bloccherà il flusso del mio codice, in modo da non generare errori a cascata.
+        if(!responseRicetta.ok){
+            throw new Error ("Non reisco a recuperare la ricetta con id" + id);
+        }
          objRicetta = await responseRicetta.json();
          console.log(objRicetta)
          //recuper l'userID.
          userId = objRicetta.userId;
          
-         
-
     }catch(error){
 
        throw new Error ("Non reisco a recuperare la ricetta con id" + id);
@@ -68,4 +77,4 @@ const getChefBirthday = async (id) => {
 getChefBirthday(3)
   .then(dateOfBirth => console.log(dateOfBirth))
   .catch(error => console.error("Errore:", error.message));
- 
+
