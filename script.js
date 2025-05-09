@@ -79,7 +79,14 @@ const getChefBirthday = async (id) => {
 
 }
 
-getChefBirthday(3)
-  .then(formattedDateOfBirth => console.log(formattedDateOfBirth))
-  .catch(error => console.error("Errore:", error.message));
+
+(async () => {
+try {
+const birthday = await getChefBirthday(3);
+console.log(birthday)
+}catch(error){
+    console.error(error);
+}
+})();
+
 
