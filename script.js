@@ -30,6 +30,10 @@ Attualmente, se la prima richiesta non trova una ricetta, la seconda richiesta p
 Modifica getChefBirthday(id) per intercettare eventuali errori prima di fare la seconda richiesta.
  */
 
+/*🎯 Bonus 2
+Utilizza la libreria dayjs per formattare la data di nascita nel formato giorno/mese/anno.
+ */
+
 const getChefBirthday = async (id) => {
 
     let objRicetta, userId;
