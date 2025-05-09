@@ -68,7 +68,8 @@ const getChefBirthday = async (id) => {
         infoChef = await responseChef.json();
         //console.log(infoChef)
         dateOfBirth = infoChef.birthDate; 
-        return dateOfBirth;
+        const formattedDateOfBirth = dayjs(dateOfBirth).format("DD/MM/YY");
+        return formattedDateOfBirth;
     }catch(error){
         throw new Error ("Non riesco a recuperare le info dello chef con userId" + id)
         //il finally in questo caso è necessario in quanto nella funzione  è presente un return.
@@ -79,6 +80,6 @@ const getChefBirthday = async (id) => {
 }
 
 getChefBirthday(3)
-  .then(dateOfBirth => console.log(dateOfBirth))
+  .then(formattedDateOfBirth => console.log(formattedDateOfBirth))
   .catch(error => console.error("Errore:", error.message));
 
